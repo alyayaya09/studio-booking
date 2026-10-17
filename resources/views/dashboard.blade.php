@@ -75,7 +75,7 @@
                             {{ \Carbon\Carbon::parse($upcoming->start_time)->format('H.i') }}
                             - {{ \Carbon\Carbon::parse($upcoming->end_time)->format('H.i') }}
                         </p>
-                        <p class="text-sm text-gray-500">Fotografer: {{ $upcoming->photographer->name }}</p>
+                       <p class="text-sm text-gray-500">Fotografer: {{ $upcoming->photographer?->name ?? 'Ditentukan studio' }}</p>
                         <p class="text-sm text-gray-500">Status: {{ ucfirst($upcoming->status) }}</p>
                     @else
                         <p class="text-sm text-gray-600">

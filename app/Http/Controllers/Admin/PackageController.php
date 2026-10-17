@@ -68,7 +68,7 @@ class PackageController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'price' => ['required', 'integer', 'min:0'],
-            'duration_minutes' => ['required', 'integer', 'min:1'],
+           'duration_minutes' => ['required', 'integer', 'min:15', 'max:480'],
         ]);
 
         // Checkbox tidak terkirim kalau tidak dicentang
