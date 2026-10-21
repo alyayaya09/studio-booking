@@ -71,6 +71,7 @@
             align-items: center;
             justify-content: space-between;
             padding-block: 1.75rem;
+            gap: 1.5rem;
         }
         .brand {
             font-family: var(--display);
@@ -78,6 +79,7 @@
             font-size: 1.5rem;
             letter-spacing: .01em;
             color: var(--champagne-soft);
+            white-space: nowrap;
         }
         .nav-links {
             display: flex;
@@ -331,18 +333,26 @@
         }
         .footer-inner {
             display: flex;
-            flex-wrap: wrap;
-            align-items: baseline;
+            align-items: flex-start;
             justify-content: space-between;
-            gap: .75rem 2rem;
+            gap: 1.5rem 3rem;
         }
+        .hours { margin: 0; min-width: 15rem; }
+        .hours div {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            padding-block: .2rem;
+        }
+        .hours dt { color: var(--mauve); }
+        .hours dd { margin: 0; color: var(--champagne-soft); }
         .footer .brand { font-size: 1.3rem; }
 
         /* ---------- Responsive ---------- */
         @media (max-width: 860px) {
             .hero { grid-template-columns: 1fr; min-height: 0; }
             .arch-wrap { justify-self: center; width: min(76%, 22rem); margin-right: 1.4rem; }
-            .today { left: -1rem; bottom: 2rem; }
+            .today { left: .75rem; bottom: 1.5rem; max-width: calc(100% - 1.5rem); }
             .package-row { grid-template-columns: 1fr auto; row-gap: .25rem; }
             .package-duration { grid-column: 1; grid-row: 2; }
             .package-price { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
@@ -350,6 +360,15 @@
         }
         @media (max-width: 520px) {
             .nav-links { gap: 1rem; }
+            .nav-anchor { display: none; }
+            .footer-inner { flex-direction: column; }
+            .hours { width: 100%; min-width: 0; }
+            html { font-size: 14px; }
+            .hero { padding-block: 1rem 3rem; }
+            .hero-title { font-size: 2.3rem; margin-bottom: 1.25rem; }
+            .hero-lead { font-size: .95rem; margin-bottom: 1.75rem; }
+            .btn { padding: .8rem 1.7rem; }
+            .step-num { font-size: 2.4rem; }
             .today { padding: .8rem 1rem; }
             .today-hours { font-size: 1.2rem; }
         }
@@ -373,8 +392,8 @@
     <header class="nav">
         <a href="{{ url('/') }}" class="brand">Framehaus</a>
         <nav class="nav-links" aria-label="Menu utama">
-            <a href="#paket">Paket</a>
-            <a href="#cara-pesan">Cara memesan</a>
+            <a href="#paket" class="nav-anchor">Paket</a>
+            <a href="#cara-pesan" class="nav-anchor">Cara memesan</a>
             @auth
                 <a href="{{ route('dashboard') }}">Dashboard</a>
                 <a href="{{ route('booking.create') }}" class="nav-cta">Pesan sekarang</a>
@@ -435,7 +454,7 @@
                             <div>
                                 <h3 class="package-name">{{ $package->name }}</h3>
                                 @if (!empty($package->description))
-                                    <p class="package-note">{{ \Illuminate\Support\Str::limit($package->description, 80) }}</p>
+                                    <p class="package-note">{{ $package->description }}</p>
                                 @endif
                             </div>
                             <span class="package-duration">{{ $package->duration_minutes }} menit</span>
@@ -477,8 +496,10 @@
 <footer class="footer">
     <div class="wrap footer-inner">
         <a href="{{ url('/') }}" class="brand">Framehaus</a>
-        <span>Senin–Sabtu 09.00–20.00</span>
-        <span>Minggu 10.00–17.00</span>
+        <dl class="hours">
+            <div><dt>Senin–Sabtu</dt><dd>09.00–20.00</dd></div>
+            <div><dt>Minggu</dt><dd>10.00–17.00</dd></div>
+        </dl>
     </div>
 </footer>
 </body>

@@ -157,12 +157,16 @@
         .revenue {
             display: flex;
             flex-wrap: wrap;
-            align-items: flex-end;
+            align-items: center;
             justify-content: space-between;
-            gap: 1.5rem;
-            padding-block: 2rem;
-            border-top: 1px solid var(--line);
+            gap: 1.25rem 2rem;
+            padding: 1.6rem 1.75rem;
+            margin-bottom: 2rem;
+            background: rgba(52, 18, 27, .6);
+            border: 1px solid var(--line);
+            border-radius: 1.25rem;
         }
+        .revenue-note { margin: .3rem 0 0; font-size: .88rem; color: var(--mauve); }
         .revenue-value {
             font-family: var(--display);
             font-weight: 500;
@@ -171,7 +175,8 @@
             color: var(--champagne-soft);
             margin: .15rem 0 0;
         }
-        .quick { display: flex; flex-wrap: wrap; gap: .75rem; }
+        .quick { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
+        .quick-label { margin-right: .4rem; font-size: .9rem; color: var(--mauve); }
         .quick a {
             border: 1px solid rgba(216, 180, 142, .45);
             color: var(--champagne-soft);
@@ -187,8 +192,7 @@
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 1.5rem;
-            padding-block: 2rem;
-            border-top: 1px solid var(--line);
+            padding-block: 0 2rem;
         }
         .stat { border-left: 1px solid var(--line); padding-left: 1.1rem; }
         .stat-value {
@@ -262,8 +266,13 @@
             .session { grid-template-columns: 1fr; }
         }
         @media (max-width: 560px) {
+            html { font-size: 14px; }
             .nav { flex-direction: column; align-items: flex-start; gap: .9rem; }
-            .nav-links { width: 100%; }
+            .nav-links { width: 100%; flex-wrap: wrap; overflow-x: visible; gap: .6rem 1.2rem; }
+            .revenue { padding: 1.25rem; }
+            .quick { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; }
+            .quick-label { grid-column: 1 / -1; margin: 0; }
+            .quick a { text-align: center; padding: .55rem .4rem; }
             .row { grid-template-columns: 1fr auto; row-gap: .35rem; }
             .row-date { grid-column: 1; grid-row: 2; }
             .row .pill { grid-column: 2; grid-row: 1 / span 2; }
@@ -334,16 +343,18 @@
                 <div>
                     <p class="label">Pendapatan</p>
                     <p class="revenue-value">Rp {{ number_format($stats['revenue'], 0, ',', '.') }}</p>
+                    <p class="revenue-note">Dari booking yang dikonfirmasi dan selesai</p>
                 </div>
                 <div class="quick">
+                    <span class="quick-label">Kelola</span>
                     @if (Route::has('admin.bookings.index'))
-                        <a href="{{ route('admin.bookings.index') }}">Kelola booking</a>
+                        <a href="{{ route('admin.bookings.index') }}">Booking</a>
                     @endif
                     @if (Route::has('admin.packages.index'))
-                        <a href="{{ route('admin.packages.index') }}">Kelola paket</a>
+                        <a href="{{ route('admin.packages.index') }}">Paket</a>
                     @endif
                     @if (Route::has('admin.photographers.index'))
-                        <a href="{{ route('admin.photographers.index') }}">Kelola fotografer</a>
+                        <a href="{{ route('admin.photographers.index') }}">Fotografer</a>
                     @endif
                 </div>
             </section>
