@@ -68,12 +68,13 @@ class BookingController extends Controller
         }
 
         // 4. Cek fotografer yang bentrok
-        // Ambil fotografer pertama yang tidak punya booking bertabrakan.
+        // Ambil fotografer aktif pertama yang tidak punya booking bertabrakan.
         // Dua jadwal dianggap bentrok jika:
         //   jam mulai booking lama < jam selesai booking baru
         //   DAN jam selesai booking lama > jam mulai booking baru.
         // Booking yang berstatus cancelled tidak dihitung.
-        $photographer = Photographer::all()->first(function ($p) use ($data, $start, $end) {
+        // Hanya fotografer yang aktif yang boleh ditugaskan.
+        $photographer = Photographer::where('is_active', true)->get()->first(function ($p) use ($data, $start, $end) {
             return ! Booking::where('photographer_id', $p->id)
                 ->whereDate('booking_date', $data['booking_date'])
                 ->where('status', '!=', 'cancelled')
